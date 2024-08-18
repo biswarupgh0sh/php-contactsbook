@@ -45,9 +45,9 @@ if (!empty($userId)) {
             <td class="align-middle"><img src=<?= $userImage ?> class="img-thumbnail img-list" style="width:80px" /></td>
             <td class="align-middle"><?= $row['first_name'] . " " . $row['last_name']; ?></td>
             <td class="align-middle">
-              <a href=<?= SITE . "view.php?id=" . $row['id'] ?> class=" btn btn-success">View</a>
-              <a href=<?= SITE . "addcontact.php?id=" . $row['id']; ?> class="btn btn-primary">Edit</a>
-              <a href=<?= SITE . "delete.php?id=" . $row['id']; ?> class="btn btn-danger" onclick="return confirm(`Are you sure want to delete this contact?`)">Delete</a>
+              <a href="<?= SITE . "view.php?id=" . $row['id'] ?>" class=" btn btn-success">View</a>
+              <a href="<?= SITE . "addcontacts.php?id=" . $row['id']; ?>" class="btn btn-primary">Edit</a>
+              <a href="<?= SITE . "delete.php?id=" . $row['id']; ?>" class="btn btn-danger" onclick="return confirm(`Are you sure want to delete this contact?`)">Delete</a>
             </td>
           </tr>
         <?php

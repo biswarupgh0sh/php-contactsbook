@@ -14,13 +14,13 @@ if (!empty($contact_id) && is_numeric($contact_id)) {
     $id = mysqli_real_escape_string($conn, $contact_id);
     $sql = "SELECT * FROM `contacts` WHERE `id` = $id AND `owner_id` = $userId";
     $sqlRes = mysqli_query($conn, $sql);
-    db_close($conn);
     $rows = mysqli_num_rows($sqlRes);
     if ($rows > 0) {
         $contact = mysqli_fetch_assoc($sqlRes);
     } else {
         $errors = "Record doesn't exist!";
     }
+	db_close($conn);
 } else {
     $errors = "Invalid contact id.";
 }
@@ -30,7 +30,7 @@ $last_name = (!empty($contact) && !empty($contact['$last_name'])) ? $contact['$l
 $email = (!empty($contact) && !empty($contact['$email'])) ? $contact['$email'] : "";
 $phone = (!empty($contact) && !empty($contact['$phone'])) ? $contact['$phone'] : "";
 $address = (!empty($contact) && !empty($contact['$address'])) ? $contact['$address'] : "";
-$first_name = (!empty($contact) && !empty($contact['$first_name'])) ? $contact['$first_name'] : "";
+
 
 ?>
 <main role="main" class="container"><div class="row justify-content-center wrapper">
@@ -66,28 +66,28 @@ $first_name = (!empty($contact) && !empty($contact['$first_name'])) ? $contact['
 	<h4 class="card-title mt-2">Add/Edit Contact</h4>
 </header>
 <article class="card-body">
-<form method="POST" action=<?= SITE."actions/addcontacts_action.php";?> enctype="multipart/form-data">
+<form method="POST" action="<?= SITE."actions/addcontacts_action.php";?>" enctype="multipart/form-data">
 	<div class="form-row">
 		<div class="col form-group">
 			<label>First Name </label>   
-		  	<input type="text" name="fname" value=<?= $first_name; ?> class="form-control" placeholder="First Name">
+		  	<input type="text" name="fname" value="<?= $first_name; ?>" class="form-control" placeholder="First Name" >
 		</div>
 		<div class="col form-group">
 			<label>Last Name</label>
-		  	<input type="text" name="lname" value=<?= $last_name; ?> class="form-control" placeholder="Last Name">
+		  	<input type="text" name="lname" value="<?= $last_name; ?>"class="form-control" placeholder="Last Name">
 		</div>
 	</div>
 	<div class="form-group">
 		<label>Email Address</label>
-		<input type="email" name="email" value=<?= $email; ?> class="form-control" placeholder="Email">
+		<input type="email" name="email" value="<?= $email; ?>" class="form-control" placeholder="Email">
 	</div>
 	<div class="form-group">
 		<label>Phone No.</label>
-		<input type="text" name="phone" value=<?= $phone; ?>  class="form-control" placeholder="Contact">
+		<input type="text" name="phone" value="<?= $phone; ?>"  class="form-control" placeholder="Contact">
 	</div>
 	<div class="form-group">
 		<label>Address</label>
-		<input type="text" name="address" value=<?= $address; ?> class="form-control" placeholder="Address">
+		<input type="text" name="address" value="<?= $address; ?>" class="form-control" placeholder="Address">
 	</div>
 	<div class="form-group input-group">
         <div class="input-group-prepend">
@@ -99,7 +99,7 @@ $first_name = (!empty($contact) && !empty($contact['$first_name'])) ? $contact['
     </div>
 	</div>
     <div class="form-group">
-        <input type="hidden" name="contactid" value=<?= $contact_id; ?> />
+        <input type="hidden" name="contactId" value="<?= $contact_id; ?>" />
         <button type="submit" class="btn btn-primary btn-block" name="submitAddcon">Submit</button>
     </div>    
 </form>

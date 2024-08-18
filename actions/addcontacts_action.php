@@ -48,7 +48,6 @@ if (isset($_POST) && !empty($_SESSION['user'])) {
 
 
     $photo_name = "";
-    print_r($_FILES['name']);
     if (!empty($photo_file['name'])) {
         $fileTempPath = $photo_file['tmp_name'];
         $fileName = $photo_file['name'];
@@ -71,27 +70,40 @@ if (isset($_POST) && !empty($_SESSION['user'])) {
 
     $owner_id = ($_SESSION['user'] && $_SESSION['user']['id']) ? $_SESSION['user']['id'] : 0;
 
+
     if (!empty($cId)) {
-        // update existing record
-        // if photo name exists
-        if (!empty($photoName)) {
-            $sql = "UPDATE `contacts` SET first_name = $first_name, last_name = $last_name, email = $email , phone = $phone, address = $address, photo = $photo_name WHERE id=$cId AND owner_id=$owner_id";
+        //update old record
+        if (!empty($photo_name)) {
+            $sql = "UPDATE `contacts` SET first_name = '$first_name', last_name = '$last_name', email = '$email' , phone = '$phone', address = '$address', photo = '$photo_name' WHERE id = $cId AND owner_id = $owner_id";
         } else {
-            // if no photo selected
-            $sql = "UPDATE `contacts` SET first_name =$first_name, last_name=$last_name, email=$email,phone=$phone, address = $address WHERE id = s$cId AND owner_id=$owner_id";
+            $sql = "UPDATE `contacts` SET first_name = '$first_name', last_name = '$last_name', email = '$email', phone = '$phone', address = '$address' WHERE id = $cId AND owner_id = $owner_id";
         }
         $message = "Contact has been updated successfully!";
     } else {
         //insert new record
-        $sql = "INSERT INTO `contacts` (first_name, last_name, email, phone, address, photo, owner_id) VALUES ($first_name, $last_name, $email,$phone, $address, $photo_name, $owner_id)";
+        $sql = "INSERT INTO `contacts` (first_name, last_name, email, phone, address, photo, owner_id) VALUES ('$first_name', '$last_name', '$email', '$phone', '$address', '$photo_name', '$owner_id')";
         $message = "New Contact has been added successfully!";
     }
 
     $conn = db_connect();
-    if(mysqli_query($conn, $sql)){
-        db_close($conn);
-        $message = "New contact has beeen added";
-        $_SESSION['success'] = $message;
-        header("location:".SITE);
-    } 
+
+    // if(mysqli_query($conn, $sql)){
+    //     db_close($conn);
+    //     $message = "New contact has been added";
+    //     $_SESSION['success'] = $message;
+    //     header("location:".SITE);
+    // } 
+
+    if($conn){
+        if(mysqli_query($conn, $sql)){
+            db_close($conn);
+            $_SESSION['success'] = $message;
+            header("location:".SITE);
+            die;
+        }else{
+            echo "Error:".mysqli_error($conn);
+        }
+    }else{
+        echo "Unable to establish a connection to the database";
+    }
 }
