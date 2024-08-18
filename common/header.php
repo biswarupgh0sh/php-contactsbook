@@ -3,6 +3,7 @@ ob_start(); // starting the object buffer
 session_start(); // starting the session to store error or success messages
 require_once "includes/config.php";
 $user = !empty($_SESSION['user']) ? $_SESSION['user'] : [];
+$currentPage = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,25 +28,25 @@ $user = !empty($_SESSION['user']) ? $_SESSION['user'] : [];
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
-          <li class="nav-item ">
+          <li class="nav-item <?= ($currentPage === SITE) ? "active" : ""; ?>">
             <a class="nav-link" href=<?= SITE; ?>>Home <span class="sr-only">(current)</span></a>
           </li>
           <?php
           if (empty($user)) {
           ?>
-            <li class="nav-item" active>
+            <li class="nav-item <?= ($currentPage == SITE."signup.php") ? "active" : ""; ?>" >
               <a class="nav-link" href=<?= SITE . "signup.php"; ?>>Signup</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item <?= ($currentPage == SITE."login.php") ? "active" : ""; ?>">
               <a class="nav-link" href=<?= SITE . "login.php"; ?>>Login</a>
             </li>
           <?php
           }
           if (!empty($user)) { ?>
-            <li class="nav-item">
+            <li class="nav-item <?= ($currentPage == SITE."addcontacts.php") ? "active" : ""; ?>">
               <a class="nav-link" href=<?= SITE . "addcontacts.php"; ?>>Add Contacts</a>
             </li>
-            <li class="nav-item dropdown ">
+            <li class="nav-item dropdown <?= ($currentPage == SITE."profile.php") ? "active" : "";?>">
               <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <?= !empty($user['first_name']) ? $user['first_name'] : "" ?>
               </a>
