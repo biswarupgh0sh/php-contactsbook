@@ -12,10 +12,10 @@ CREATE DATABASE contactsbook;
 USE contactsbook;
 ```
 
-## To create `user` table
+## To create `users` table
 
 ```sql
-CREATE TABLE user(
+CREATE TABLE users(
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(20) NOT NULL,
     last_name VARCHAR(20) NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE user(
 ## To create `contacts` table
 
 ```sql
-CREATE TABLE user(
+CREATE TABLE contacts(
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(20) NOT NULL,
     last_name VARCHAR(20) NOT NULL,
