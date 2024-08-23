@@ -1,6 +1,7 @@
 <?php
 require_once("common/header.php");
 require_once("includes/db.php");
+//checking wheather user is logged in
 if(empty($_SESSION['user'])){
     header("location:" .SITE. "login.php");
     die;
@@ -8,10 +9,12 @@ if(empty($_SESSION['user'])){
 
 $errors = "";
 $userId = (!empty($_SESSION['user']) && !empty($_SESSION['user']['id'])) ? $_SESSION['user']['id'] : 0;
+
+//checking weather there is a get req with a id
 $contact_id = !empty($_GET['id']) ? $_GET['id'] : "";
 if (!empty($contact_id) && is_numeric($contact_id)) {
     $conn = db_connect();
-    $id = mysqli_real_escape_string($conn, $contact_id);
+    $id = mysqli_real_escape_string($conn, $contact_id); //to filter 
     $sql = "SELECT * FROM `contacts` WHERE `id` = $id AND `owner_id` = $userId";
     $sqlRes = mysqli_query($conn, $sql);
     $rows = mysqli_num_rows($sqlRes);
@@ -25,6 +28,7 @@ if (!empty($contact_id) && is_numeric($contact_id)) {
     $errors = "Invalid contact id.";
 }
 
+//get the values during edit of the contacts
 $first_name = (!empty($contact) && !empty($contact['$first_name'])) ? $contact['$first_name'] : "";
 $last_name = (!empty($contact) && !empty($contact['$last_name'])) ? $contact['$last_name'] : "";
 $email = (!empty($contact) && !empty($contact['$email'])) ? $contact['$email'] : "";
@@ -36,6 +40,7 @@ $address = (!empty($contact) && !empty($contact['$address'])) ? $contact['$addre
 <main role="main" class="container"><div class="row justify-content-center wrapper">
 <div class="col-md-6">
 	<?php
+	//show success message if needed to show
 		if(!empty($_SESSION['success'])){
 	?>
 	<div class="alert alert-success text-center">
@@ -44,8 +49,10 @@ $address = (!empty($contact) && !empty($contact['$address'])) ? $contact['$addre
 		</ul>
 	</div>
 	<?php
+	//disappear message if once refreshed
 	unset($_SESSION['success']);
 		}
+		//show error message if any
 	if(!empty($_SESSION['errors'])){	?>
 		<div class="alert alert-danger">
 			<p>Following error(s):</p>
@@ -58,6 +65,7 @@ $address = (!empty($contact) && !empty($contact['$address'])) ? $contact['$addre
 			</ul>
 		</div>
 		<?php
+		//disappear message once refreshed
 		unset($_SESSION['errors']);
 			}	
 		?>

@@ -49,15 +49,20 @@ if (isset($_POST) && !empty($_SESSION['user'])) {
 
     $photo_name = "";
     if (!empty($photo_file['name'])) {
+        //to get the temporary path of the file
         $fileTempPath = $photo_file['tmp_name'];
         $fileName = $photo_file['name'];
+        //to convert a string into array by specific separator "."
         $fileNameCmp = explode(".", $fileName);
+        //to cast it to lowercase
         $fileExt = strtolower(end($fileNameCmp));
+        //to hash using md5(message-digest) algorithm to create a 128-bit hash value
         $fileNewName = md5(time() . $fileName) . "." . $fileExt;
         $photo_name = $fileNewName;
 
-
+        //setting which extensions will be allowed
         $allowd_entry = ["jpg", "jpeg", "png", "gif"];
+        //checking wheather file extension is there in the allowed extention
         if (in_array($fileExt, $allowd_entry)) {
             $desti = "../uploads/photos/".$photo_name;
             if (!move_uploaded_file($fileTempPath, $desti)) {
@@ -74,8 +79,10 @@ if (isset($_POST) && !empty($_SESSION['user'])) {
     if (!empty($cId)) {
         //update old record
         if (!empty($photo_name)) {
+            //if photo is changed then the below query will be executed
             $sql = "UPDATE `contacts` SET first_name = '$first_name', last_name = '$last_name', email = '$email' , phone = '$phone', address = '$address', photo = '$photo_name' WHERE id = $cId AND owner_id = $owner_id";
         } else {
+            //if photo is not changed then the below query will be executed
             $sql = "UPDATE `contacts` SET first_name = '$first_name', last_name = '$last_name', email = '$email', phone = '$phone', address = '$address' WHERE id = $cId AND owner_id = $owner_id";
         }
         $message = "Contact has been updated successfully!";

@@ -8,7 +8,7 @@ if(empty($_SESSION['user'])){
     header("location:".SITE."login.php");
     die;
 }
-
+//checking the get req with a specific id
 if(!empty($_GET['id']) && is_numeric($_GET['id'])){
     $userId = $_SESSION['user']['id'];
     $contactId = $_GET['id'];

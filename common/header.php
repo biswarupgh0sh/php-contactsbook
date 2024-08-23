@@ -32,6 +32,7 @@ $currentPage = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
             <a class="nav-link" href=<?= SITE; ?>>Home <span class="sr-only">(current)</span></a>
           </li>
           <?php
+          //if no user is logged in then show signup and login
           if (empty($user)) {
           ?>
             <li class="nav-item <?= ($currentPage == SITE."signup.php") ? "active" : ""; ?>" >
@@ -42,6 +43,7 @@ $currentPage = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
             </li>
           <?php
           }
+          // if user is logged in then show option to addcontact and see the profile
           if (!empty($user)) { ?>
             <li class="nav-item <?= ($currentPage == SITE."addcontacts.php") ? "active" : ""; ?>">
               <a class="nav-link" href=<?= SITE . "addcontacts.php"; ?>>Add Contacts</a>

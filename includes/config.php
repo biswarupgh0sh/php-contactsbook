@@ -1,12 +1,15 @@
 <?php
+//declaring a constant SITE
 define("SITE", "/contactsbook/");
 
 function print_arr($arr)
 {
     echo "<pre>";
     print_r($arr);
+    echo "</pre>";
 }
 
+//function to get pagination
 function getPagination($total_records, $current_page = 1, $per_page = 5)
 {
     $total_pages = ($total_records > 0) ? ceil($total_records / $per_page) : 0;

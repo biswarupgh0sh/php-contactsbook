@@ -1,8 +1,12 @@
 <?php
+//to start the object buffer
 ob_start();
+//to start the session
 session_start();
 require_once "../includes/config.php";
 require_once "../includes/db.php";
+
+//to check the post req
 if(isset($_POST['register'])){
     $errors = [];
 
@@ -21,6 +25,7 @@ if(isset($_POST['register'])){
     if(empty($email)){
         $errors[] = 'Enter the email.';
     }
+    //to check that email is not empty and check wheather is a valid email
     if(!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)){
         $errors[] = 'Enter a valid email.';
     }
@@ -30,6 +35,7 @@ if(isset($_POST['register'])){
     if(empty($confirm_password)){
         $errors[] = 'Enter the password to confirm.';
     }
+    //to make sure that password and confirm password field is filled with the same
     if(!empty($password) && !empty($cpassword) && $password != $confirm_password){
         $errors[] = 'Make sure to type the same password in boths the password fields.';
     }
@@ -52,6 +58,8 @@ if(isset($_POST['register'])){
     }
 
     //if no error
+
+    // create a hash to store the password in the database
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
     $sql = "INSERT INTO `users` (first_name, last_name, email, password) VALUES ('$first_name', '$last_name', '$email', '$passwordHash')";
     $conn = db_connect();

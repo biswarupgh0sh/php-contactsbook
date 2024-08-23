@@ -18,8 +18,8 @@ if (!empty($userId)) {
 
   $conn = db_connect();
   $sql = "SELECT * FROM `contacts` WHERE `owner_id` = $userId ORDER BY first_name ASC LIMIT $offset, $limit";
-  $sqlRes = mysqli_query($conn, $sql);
-  $mysqlinumrows = mysqli_num_rows($sqlRes);
+  $sqlRes = mysqli_query($conn, $sql); // to run the sql query
+  $mysqlinumrows = mysqli_num_rows($sqlRes); // to get number of fetched rows
 
   $countSql = "SELECT id FROM `contacts` WHERE `owner_id` = $userId";
   $countRes = mysqli_query($conn, $countSql);
@@ -38,6 +38,7 @@ if (!empty($userId)) {
       </thead>
       <tbody>
         <?php
+        //to fetch a result row as associative array
         while ($row = mysqli_fetch_assoc($sqlRes)) {
           $userImage = (!empty($row['photo'])) ? SITE . 'uploads/photos/' . $row['photo'] : "https://via.placeholder.com/50.png/09f/666";
         ?>

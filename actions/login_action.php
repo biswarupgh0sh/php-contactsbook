@@ -33,7 +33,9 @@ require_once "../includes/db.php";
                 $user_info = mysqli_fetch_assoc($result);
                 if(!empty($user_info)){
                     $passInDb = $user_info['password'];
+                    //to verify the hashed password
                     if(password_verify($password, $passInDb)){
+                        //removing password from user_info before addressing to session
                         unset($user_info['password']);
                         $_SESSION['user'] = $user_info;
                         header("location:".SITE);
