@@ -6,7 +6,7 @@
 CREATE DATABASE contactsbook;
 ```
 
-## To use any database
+## To use the database
 
 ```sql
 USE contactsbook;
