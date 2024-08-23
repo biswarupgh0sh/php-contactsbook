@@ -38,6 +38,6 @@ CREATE TABLE user(
     address VARCHAR(255) NOT NULL,
     photo VARCHAR(100) NOT NULL,
     status ENUM("1","0") DEFAULT "1" NOT NULL,
-    owner_id NOT NULL,
+    owner_id INT NOT NULL,
 );
 ```
